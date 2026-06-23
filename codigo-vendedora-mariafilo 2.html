@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Código de Vendedora A5M6 · Maria Filó</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F4E4D3;
+    --ink:#1C1712;
+    --terracotta:#B5572E;
+    --clay:#D9B79A;
+    --umber:#3E2F26;
+    --sand:#C9A06B;
+    --line: rgba(28,23,18,0.14);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Jost', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .serif{font-family:'Cormorant Garamond', serif;}
+  a{text-decoration:none;color:inherit;}
+  button{font-family:inherit;border:none;cursor:pointer;}
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--terracotta);
+    outline-offset:3px;
+  }
+
+  /* ---------- HEADER ---------- */
+  header{
+    background:var(--umber);
+    color:var(--clay);
+    padding:18px 24px 16px;
+    text-align:center;
+  }
+  .eyebrow{
+    font-size:11px;
+    letter-spacing:.22em;
+    font-weight:500;
+    color:var(--clay);
+    opacity:.9;
+  }
+  .wordmark{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:26px;
+    letter-spacing:.08em;
+    color:#F6F1E7;
+    margin-top:6px;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    background:
+      radial-gradient(120% 60% at 15% 0%, #d9a36a 0%, transparent 55%),
+      radial-gradient(140% 70% at 90% 100%, #8a4a26 0%, transparent 60%),
+      linear-gradient(160deg, #caa372 0%, #a9703f 45%, #7d4527 100%);
+    padding:64px 24px 56px;
+    text-align:center;
+    color:#fbf3e7;
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      repeating-linear-gradient(115deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 1px, transparent 1px, transparent 7px),
+      repeating-linear-gradient(25deg, rgba(0,0,0,0.06) 0px, rgba(0,0,0,0.06) 1px, transparent 1px, transparent 9px);
+    mix-blend-mode:overlay;
+    opacity:.7;
+  }
+  .hero::after{
+    content:"";
+    position:absolute; left:0; right:0; bottom:-2px; height:120px;
+    background:var(--cream);
+    border-radius:60% 60% 0 0 / 100% 100% 0 0;
+  }
+  .hero-inner{position:relative; z-index:2;}
+  .hero-eyebrow{
+    font-size:12px;
+    letter-spacing:.2em;
+    opacity:.85;
+    margin-bottom:14px;
+  }
+  .hero-title{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:clamp(28px, 6vw, 38px);
+    line-height:1.15;
+    margin-bottom:4px;
+  }
+  .hero-sub{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:clamp(22px, 5vw, 28px);
+    margin-bottom:28px;
+    opacity:.95;
+  }
+
+  .code-card{
+    display:inline-flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+    background:rgba(0,0,0,0.16);
+    border:1px solid rgba(255,255,255,0.35);
+    border-radius:14px;
+    padding:18px 30px 16px;
+    backdrop-filter:blur(2px);
+    animation:rise .7s ease-out both;
+  }
+  @keyframes rise{
+    from{opacity:0; transform:translateY(14px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  .code-text{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:600;
+    font-size:clamp(44px, 14vw, 64px);
+    letter-spacing:.06em;
+    color:#fffaf2;
+    line-height:1;
+  }
+  .code-hint{
+    font-size:11px;
+    letter-spacing:.14em;
+    opacity:.85;
+  }
+  .code-hint svg{vertical-align:-2px; margin-right:4px; width:12px; height:12px;}
+
+  .toast{
+    position:fixed;
+    bottom:28px;
+    left:50%;
+    transform:translateX(-50%) translateY(20px);
+    background:var(--ink);
+    color:#fff;
+    padding:11px 20px;
+    border-radius:999px;
+    font-size:13px;
+    letter-spacing:.02em;
+    opacity:0;
+    transition:opacity .25s, transform .25s;
+    pointer-events:none;
+    z-index:50;
+    white-space:nowrap;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+  /* ---------- BENEFITS ---------- */
+  .section{
+    padding:48px 24px;
+    max-width:520px;
+    margin:0 auto;
+  }
+  .section-title{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:600;
+    font-size:clamp(26px, 6vw, 32px);
+    line-height:1.2;
+    text-align:center;
+    margin-bottom:18px;
+  }
+  .section-title .accent{color:var(--terracotta);}
+  .lede{
+    text-align:center;
+    font-size:15px;
+    line-height:1.6;
+    color:rgba(28,23,18,0.78);
+    margin-bottom:26px;
+  }
+  .offer-line{
+    text-align:center;
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:clamp(30px, 8vw, 40px);
+    color:var(--terracotta);
+    line-height:1.1;
+  }
+  .offer-note{
+    text-align:center;
+    font-size:13px;
+    color:rgba(28,23,18,0.62);
+    margin-top:10px;
+  }
+
+  /* ---------- STEPS ---------- */
+  .steps-wrap{background:var(--clay);}
+  .steps{
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+    margin-top:28px;
+  }
+  .step{
+    display:flex;
+    gap:16px;
+    align-items:flex-start;
+  }
+  .step-num{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:26px;
+    color:var(--terracotta);
+    line-height:1;
+    min-width:34px;
+  }
+  .step-body h3{
+    font-size:14.5px;
+    font-weight:600;
+    margin-bottom:3px;
+  }
+  .step-body p{
+    font-size:13.5px;
+    color:rgba(28,23,18,0.72);
+    line-height:1.5;
+  }
+
+  /* ---------- VIP ---------- */
+  .vip-wrap{
+    background:var(--cream);
+    padding:48px 24px 8px;
+    max-width:480px;
+    margin:0 auto;
+    text-align:center;
+  }
+  .vip-card{
+    border:1.5px solid var(--terracotta);
+    border-radius:14px;
+    padding:26px 22px 24px;
+  }
+  .vip-badge{
+    display:inline-block;
+    font-size:11px;
+    letter-spacing:.18em;
+    font-weight:600;
+    color:var(--terracotta);
+    border:1px solid var(--terracotta);
+    border-radius:999px;
+    padding:4px 12px;
+    margin-bottom:14px;
+  }
+  .vip-card h2{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:24px;
+    margin-bottom:8px;
+  }
+  .vip-card p{
+    font-size:13.5px;
+    color:rgba(28,23,18,0.72);
+    line-height:1.55;
+    margin-bottom:18px;
+  }
+  .btn-vip{
+    background:var(--terracotta);
+    color:#fff;
+    width:100%;
+  }
+
+  /* ---------- CTA ---------- */
+  .cta-wrap{
+    padding:44px 24px 52px;
+    max-width:480px;
+    margin:0 auto;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:17px 20px;
+    border-radius:10px;
+    font-size:15px;
+    font-weight:600;
+    letter-spacing:.01em;
+    transition:transform .15s, opacity .15s;
+  }
+  .btn:active{transform:scale(.98);}
+  .btn-primary{
+    background:var(--terracotta);
+    color:#fff;
+  }
+  .btn-secondary{
+    background:#FFFFFF;
+    color:var(--ink);
+    border:1.5px solid var(--ink);
+  }
+  .btn svg{width:17px; height:17px; flex-shrink:0;}
+  .cta-foot{
+    text-align:center;
+    font-size:12px;
+    color:rgba(28,23,18,0.55);
+    margin-top:6px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--umber);
+    color:rgba(246,241,231,0.75);
+    text-align:center;
+    padding:30px 24px 34px;
+    font-size:12px;
+    line-height:1.7;
+  }
+  footer .fname{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:17px;
+    color:var(--cream);
+    margin-bottom:6px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .code-card{animation:none;}
+    *{transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <div class="eyebrow">CÓDIGO DE VENDEDORA</div>
+    <div class="wordmark">Maria Filó</div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">CÓDIGO DE VENDEDORA</div>
+      <p class="hero-title">Código de Vendedora</p>
+      <p class="hero-sub">Maria Filó</p>
+
+      <button class="code-card" id="copyBtn" aria-label="Copiar código A5M6">
+        <span class="code-text">A5M6</span>
+        <span class="code-hint">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="1.5"/><path d="M5 15V5a1.5 1.5 0 0 1 1.5-1.5H15"/></svg>
+          toque para copiar
+        </span>
+      </button>
+    </div>
+  </section>
+
+  <section class="section">
+    <h1 class="section-title">Benefícios do <span class="accent">código A5M6</span></h1>
+    <p class="lede">Use o código de vendedora A5M6 no carrinho do site oficial da Maria Filó e garanta:</p>
+    <p class="offer-line">10% OFF + Frete Grátis*</p>
+    <p class="offer-note">*Nas compras acima de R$ 699,00. Confira condições no site oficial.</p>
+  </section>
+
+  <section class="section steps-wrap">
+    <h2 class="section-title">Como usar</h2>
+    <div class="steps">
+      <div class="step">
+        <span class="step-num serif">1</span>
+        <div class="step-body">
+          <h3>Copie o código A5M6</h3>
+          <p>Toque no código acima — ele já fica salvo para colar depois.</p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num serif">2</span>
+        <div class="step-body">
+          <h3>Escolha suas peças</h3>
+          <p>Navegue no site oficial da Maria Filó ou me chame no WhatsApp se quiser ajuda para escolher.</p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num serif">3</span>
+        <div class="step-body">
+          <h3>Cole o código no carrinho</h3>
+          <p>Antes de finalizar a compra, aplique o código A5M6 e aproveite o desconto.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="vip-wrap">
+    <div class="vip-card">
+      <span class="vip-badge">GRUPO VIP</span>
+      <h2>Quer ofertas em primeira mão?</h2>
+      <p>Entre no meu grupo do WhatsApp e receba lançamentos, promoções e o código de desconto antes de todo mundo.</p>
+      <a class="btn btn-vip" href="https://chat.whatsapp.com/HsPRYxuIKUw6PPVlpqRyvn?mode=gi_t" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.6.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.8-.9-3-1.6-4.2-3.6-.1-.3 0-.4.1-.5.2-.2.5-.5.6-.7.1-.2.1-.4 0-.6-.1-.2-.7-1.7-1-2.3-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.2-1 1-.9 2.3.1 1.4 1.1 2.8 1.3 3 .2.2 2.3 3.6 5.7 4.8 2.9 1 2.9.7 3.4.6.5-.1 1.6-.6 1.8-1.2.2-.6.2-1.1.2-1.2 0-.1-.2-.2-.4-.3z"/><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l4.9-1.3A10 10 0 1 0 12 2Z"/></svg>
+        Entrar no grupo VIP
+      </a>
+    </div>
+  </section>
+
+  <section class="cta-wrap">
+    <a class="btn btn-primary" href="https://www.mariafilo.com.br/" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      Comprar no site oficial
+    </a>
+    <a class="btn btn-secondary" id="whatsBtn" href="#" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.6.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.8-.9-3-1.6-4.2-3.6-.1-.3 0-.4.1-.5.2-.2.5-.5.6-.7.1-.2.1-.4 0-.6-.1-.2-.7-1.7-1-2.3-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.2-1 1-.9 2.3.1 1.4 1.1 2.8 1.3 3 .2.2 2.3 3.6 5.7 4.8 2.9 1 2.9.7 3.4.6.5-.1 1.6-.6 1.8-1.2.2-.6.2-1.1.2-1.2 0-.1-.2-.2-.4-.3z"/><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l4.9-1.3A10 10 0 1 0 12 2Z"/></svg>
+      Falar comigo no WhatsApp
+    </a>
+    <p class="cta-foot">Dúvidas de tamanho, frete ou modelo? Te respondo pelo WhatsApp.</p>
+  </section>
+
+  <footer>
+    <div class="fname">Maria Filó</div>
+    Página de divulgação de vendedora autorizada.<br>
+    Código de vendedora: A5M6
+  </footer>
+
+  <div class="toast" id="toast">Código A5M6 copiado!</div>
+
+  <script>
+    const code = "A5M6";
+
+    document.getElementById('copyBtn').addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(code);
+      } catch (e) {
+        const ta = document.createElement('textarea');
+        ta.value = code;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      }
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2200);
+    });
+
+    const waMessage = `Olá! Vi seu código de vendedora ${code} da Maria Filó e gostaria de mais informações.`;
+    document.getElementById('whatsBtn').href = `https://wa.me/5521973785955?text=${encodeURIComponent(waMessage)}`;
+  </script>
+
+</body>
+</html>
